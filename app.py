@@ -1,12 +1,12 @@
 
 
    import streamlit as st
-from datetime import datetime
+import time
 
-# --- NEXUS // OMEGA: THE COMPLETED ARCHITECTURE ---
+# --- NEXUS // OMEGA: TRUE NAVIGATION ARCHITECTURE ---
 st.set_page_config(page_title="Nexus // Emergent", layout="wide", initial_sidebar_state="collapsed")
 
-# 💠 THE INVISIBLE CSS ENGINE (Match 1000244729_2.mp4 exactly)
+# 💠 THE INVISIBLE CSS ENGINE (Exact match for the video)
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@500&display=swap');
@@ -16,10 +16,14 @@ st.markdown("""
     .block-container { padding: 0 !important; }
 
     /* Top Nav Icons */
-    .nav-bar { display: flex; justify-content: space-around; align-items: center; padding: 15px; border-bottom: 1px solid #111; background: #000; }
-    .nav-icon { color: #444; font-size: 20px; cursor: pointer; transition: 0.3s; }
-    .nav-icon.active { color: #CDFF00; text-shadow: 0 0 10px #CDFF00; }
-    .nav-logo { background: #CDFF00; color: #000; font-weight: 900; padding: 2px 8px; font-size: 14px; }
+    .stButton>button {
+        background: transparent !important;
+        border: none !important;
+        color: #444 !important;
+        font-size: 20px !important;
+        transition: 0.3s !important;
+    }
+    .stButton>button:hover { color: #CDFF00 !important; }
 
     /* Hero Text Style */
     .hero { padding: 40px 25px; }
@@ -47,22 +51,22 @@ st.markdown("""
 if 'module' not in st.session_state:
     st.session_state.module = "HOME"
 
-# Nav Bar UI
+# Nav Bar UI (The top icons from the video)
 cols = st.columns([1, 1, 1, 1, 1])
-with cols[0]: 
+with cols[0]:
     if st.button("N"): st.session_state.module = "HOME"
-with cols[1]: 
+with cols[1]:
     if st.button("👁️"): st.session_state.module = "VISION"
-with cols[2]: 
+with cols[2]:
     if st.button("🎙️"): st.session_state.module = "VOICE"
-with cols[3]: 
+with cols[3]:
     if st.button(">_"): st.session_state.module = "DEV"
-with cols[4]: 
+with cols[4]:
     if st.button("↺"): st.session_state.module = "HISTORY"
 
-st.markdown("---")
+st.markdown("<hr style='border: 1px solid #111; margin: 0;'>", unsafe_allow_html=True)
 
-# --- SCREEN SWITCHER ---
+# --- SCREEN SWITCHER (This handles the different options) ---
 if st.session_state.module == "HOME":
     st.markdown("""
         <div class="hero">
@@ -70,23 +74,22 @@ if st.session_state.module == "HOME":
             <h1 class="title">Your <span class="highlight">academic<br>weapon</span>, compiled<br>and armed.</h1>
         </div>
     """, unsafe_allow_html=True)
-    st.info("Select a module from the top bar to begin analysis.")
 
 elif st.session_state.module == "VISION":
-    st.markdown("<h2 style='padding:0 25px;'>VISION SCANNER</h2>", unsafe_allow_html=True)
-    st.camera_input("SCAN_INPUT", label_visibility="collapsed")
+    st.markdown("<div style='padding: 25px;'><h3>MODULE 01 // VISION-TO-SOLUTION</h3></div>", unsafe_allow_html=True)
+    st.camera_input("SCAN", label_visibility="collapsed")
     st.button("SOLVE WITH NEXUS")
 
 elif st.session_state.module == "VOICE":
-    st.markdown("<h2 style='padding:0 25px;'>VOICE COMMAND</h2>", unsafe_allow_html=True)
-    st.markdown("<div style='text-align:center; padding:50px; border:1px solid #111;'>🎙️ Listening for Query...</div>", unsafe_allow_html=True)
+    st.markdown("<div style='padding: 25px;'><h3>MODULE 02 // VOICE-TO-KNOWLEDGE</h3></div>", unsafe_allow_html=True)
+    st.markdown("<div style='text-align:center; padding:50px; border:1px solid #111; color: #CDFF00;'>🎙️ Tap to Speak</div>", unsafe_allow_html=True)
     st.button("ASK NEXUS")
 
 elif st.session_state.module == "DEV":
-    st.markdown("<h2 style='padding:0 25px;'>DEV MODE</h2>", unsafe_allow_html=True)
-    st.code("// Enter code for debugging\nfunction nexus() {\n  return 'ready';\n}", language='javascript')
-    st.button("EXECUTE CODE")
+    st.markdown("<div style='padding: 25px;'><h3>MODULE 03 // DEV MODE</h3></div>", unsafe_allow_html=True)
+    st.code("// Debug. Explain. Scaffold.\nfunction debug() {\n  console.log('Nexus Armed');\n}", language='javascript')
+    st.button("RUN NEXUS ENGINE")
 
 elif st.session_state.module == "HISTORY":
-    st.markdown("<h2 style='padding:0 25px;'>ARCHIVE</h2>", unsafe_allow_html=True)
-    st.write("Your intellectual runbook is empty.")
+    st.markdown("<div style='padding: 25px;'><h3>ARCHIVE // RUNBOOK</h3></div>", unsafe_allow_html=True)
+    st.write("Archive is currently empty. Solve your first doubt.")
