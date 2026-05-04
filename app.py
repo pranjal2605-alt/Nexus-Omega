@@ -2,20 +2,21 @@
 
 import streamlit as st
 
-# --- NEXUS // OMEGA: TOTAL RESTORATION ---
+# --- NEXUS // OMEGA: HARD-CODED VISUAL LOCK ---
 st.set_page_config(page_title="Nexus // Emergent", layout="wide", initial_sidebar_state="collapsed")
 
-# 💠 THE INVISIBLE ENGINE: 1:1 REPLICATION
+# 💠 THE ENGINE: FORCED VISIBILITY & NEON PHYSICS
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@700&display=swap');
     
+    /* Global Reset */
     .stApp { background-color: #000000 !important; color: #FFFFFF !important; font-family: 'Inter', sans-serif !important; }
-    header, footer, #MainMenu { visibility: hidden !important; }
-    .block-container { padding: 0 !important; max-width: 100% !important; }
+    header, footer, #MainMenu { visibility: hidden !important; height: 0; }
+    .block-container { padding: 0 !important; max-width: 100% !important; display: block !important; }
 
-    /* THE LOGO: Glowing & Large */
-    .logo-container { padding: 40px 25px 10px 25px; }
+    /* THE LOGO: Match Vid Glow & Size */
+    .logo-container { padding: 40px 25px 5px 25px; margin-top: 20px; }
     .nav-logo { 
         background: #CDFF00; 
         color: #000; 
@@ -23,100 +24,100 @@ st.markdown("""
         padding: 10px 22px; 
         font-size: 32px; 
         display: inline-block;
-        line-height: 1;
-        box-shadow: 0 0 25px #CDFF00;
+        box-shadow: 0 0 30px #CDFF00;
         border-radius: 0px;
+        line-height: 1;
     }
 
-    /* Hero Text: Aggressive & Tight */
-    .hero { padding: 20px 25px; }
-    .session-tag { color: #333; font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: 4px; margin-bottom: 10px; }
-    .title { font-size: 60px; font-weight: 900; line-height: 0.85; letter-spacing: -4px; margin: 0; text-transform: lowercase; }
-    .highlight { color: #CDFF00; }
-
-    /* Tactical Navigation Icons */
+    /* Top Navigation: Stealth Desaturated */
+    .nav-row { display: flex; justify-content: space-between; padding: 10px 25px; border-bottom: 1px solid #111; }
     .stButton>button {
         background: transparent !important;
         border: none !important;
         color: #333333 !important;
-        font-size: 24px !important;
-        padding: 15px !important;
-        transition: 0.2s ease !important;
+        font-size: 26px !important;
+        font-family: 'JetBrains Mono' !important;
+        transition: 0.3s;
     }
-    .stButton>button:hover { color: #CDFF00 !important; }
+    .stButton>button:hover { color: #CDFF00 !important; text-shadow: 0 0 10px #CDFF00; }
 
-    /* The Tactical Grid (Restored) */
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #111; border-top: 1px solid #111; border-bottom: 1px solid #111; margin-top: 40px; }
-    .module-box { background: #000; padding: 45px 25px; min-height: 150px; }
-    .mod-label { color: #CDFF00; font-family: 'JetBrains Mono'; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; display: block; opacity: 0.7; }
-    .mod-title { font-size: 26px; font-weight: 800; margin: 0; letter-spacing: -1px; color: #FFF; }
+    /* Hero: The "Academic Weapon" Core */
+    .hero { padding: 30px 25px; }
+    .title { 
+        font-size: 70px; 
+        font-weight: 900; 
+        line-height: 0.82; 
+        letter-spacing: -5px; 
+        margin: 0; 
+        text-transform: lowercase;
+        color: #FFFFFF;
+    }
+    .highlight { color: #CDFF00; }
 
-    /* Live Clock */
-    #live-clock { position: fixed; bottom: 30px; right: 30px; font-family: 'JetBrains Mono'; color: #CDFF00; font-weight: 700; font-size: 15px; z-index: 9999; opacity: 0.5; }
+    /* Module Grid: 1:1 with Vid */
+    .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #111; border-top: 1px solid #111; margin-top: 40px; }
+    .module-box { background: #000; padding: 50px 25px; min-height: 160px; }
+    .mod-label { color: #CDFF00; font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 15px; display: block; opacity: 0.6; }
+    .mod-title { font-size: 30px; font-weight: 800; color: #FFF; margin: 0; letter-spacing: -1.5px; }
+
+    /* System Clock */
+    #sys-clock { position: fixed; bottom: 30px; right: 30px; font-family: 'JetBrains Mono'; color: #CDFF00; font-weight: 700; font-size: 14px; opacity: 0.5; z-index: 1000; }
     </style>
 
-    <div id="live-clock">SYS_TIME: 00:00:00</div>
+    <div id="sys-clock">SYS_TIME: 00:00:00</div>
     <script>
         function updateClock() {
             const now = new Date();
             const time = now.getHours().toString().padStart(2, '0') + ":" + 
                          now.getMinutes().toString().padStart(2, '0') + ":" + 
                          now.getSeconds().toString().padStart(2, '0');
-            document.getElementById('live-clock').innerText = "SYS_TIME: " + time;
+            document.getElementById('sys-clock').innerText = "SYS_TIME: " + time;
         }
-        setInterval(updateClock, 1000);
-        updateClock();
+        setInterval(updateClock, 1000); updateClock();
     </script>
     """, unsafe_allow_html=True)
 
-# --- NAVIGATION ENGINE ---
+# --- NAV ENGINE ---
 if 'nav' not in st.session_state: st.session_state.nav = "HOME"
 
-cols = st.columns([1, 1, 1, 1, 1])
-with cols[0]: 
+# Navigation Header (Fixed Row)
+nav_cols = st.columns([1, 1, 1, 1, 1])
+with nav_cols[0]: 
     if st.button("●"): st.session_state.nav = "HOME"
-with cols[1]: 
+with nav_cols[1]: 
     if st.button("○"): st.session_state.nav = "VISION"
-with cols[2]: 
+with nav_cols[2]: 
     if st.button("▲"): st.session_state.nav = "VOICE"
-with cols[3]: 
+with nav_cols[3]: 
     if st.button("■"): st.session_state.nav = "DEV"
-with cols[4]: 
-    if st.button("☰"): st.session_state.nav = "ARCHIVE"
+with nav_cols[4]: 
+    if st.button("☰"): st.session_state.nav = "MENU"
 
-st.markdown("<hr style='border: 0; border-top: 1px solid #111; margin: 0;'>", unsafe_allow_html=True)
-
-# --- MAIN INTERFACE ---
+# --- CONTENT ROUTER ---
 if st.session_state.nav == "HOME":
+    # Logo & Hero
     st.markdown("""
         <div class="logo-container"><div class="nav-logo">N</div></div>
         <div class="hero">
-            <div class="session-tag">—— SESSION // 000</div>
             <h1 class="title">academic<br><span class="highlight">weapon</span></h1>
         </div>
-        
-        <div class="grid">
     """, unsafe_allow_html=True)
+
+    # Tactical Grid (Force rendered via Columns to ensure Streamlit visibility)
+    st.markdown('<div class="grid-container">', unsafe_allow_html=True)
+    row1_left, row1_right = st.columns(2)
+    with row1_left:
+        st.markdown('<div class="module-box"><span class="mod-label">OPTICAL SCAN</span><h3 class="mod-title">Vision</h3></div>', unsafe_allow_html=True)
+    with row1_right:
+        st.markdown('<div class="module-box"><span class="mod-label">SONIC INPUT</span><h3 class="mod-title">Voice</h3></div>', unsafe_allow_html=True)
     
-    # Bottom Grid from Video
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown('<div class="module-box"><span class="mod-label">SNAP IT. SOLVE IT.</span><h3 class="mod-title">Vision</h3></div>', unsafe_allow_html=True)
-    with col2:
-        st.markdown('<div class="module-box" style="border-left:1px solid #111;"><span class="mod-label">ASK OUT LOUD.</span><h3 class="mod-title">Voice</h3></div>', unsafe_allow_html=True)
-    
-    col3, col4 = st.columns(2)
-    with col3:
-        st.markdown('<div class="module-box" style="border-top:1px solid #111;"><span class="mod-label">DEBUG MODE.</span><h3 class="mod-title">Dev</h3></div>', unsafe_allow_html=True)
-    with col4:
-        st.markdown('<div class="module-box" style="border-top:1px solid #111; border-left:1px solid #111;"><span class="mod-label">ARCHIVE.</span><h3 class="mod-title">History</h3></div>', unsafe_allow_html=True)
-    
+    row2_left, row2_right = st.columns(2)
+    with row2_left:
+        st.markdown('<div class="module-box" style="border-top:1px solid #111;"><span class="mod-label">KERNEL</span><h3 class="mod-title">Dev</h3></div>', unsafe_allow_html=True)
+    with row2_right:
+        st.markdown('<div class="module-box" style="border-top:1px solid #111;"><span class="mod-label">LOGS</span><h3 class="mod-title">History</h3></div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
 elif st.session_state.nav == "VISION":
     st.markdown('<div class="logo-container"><div class="nav-logo">N</div></div>', unsafe_allow_html=True)
     st.camera_input("SCANNER", label_visibility="collapsed")
-
-elif st.session_state.nav == "VOICE":
-    st.markdown('<div class="logo-container"><div class="nav-logo">N</div></div>', unsafe_allow_html=True)
-    st.markdown('<div style="height:300px; display:flex; align-items:center; justify-content:center; color:#CDFF00; font-family:JetBrains Mono; font-size:24px;">[ LISTENING ]</div>', unsafe_allow_html=True)
