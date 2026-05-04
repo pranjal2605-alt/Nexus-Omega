@@ -1,6 +1,6 @@
 
 
-   import streamlit as st
+import streamlit as st
 import time
 
 # --- NEXUS // OMEGA: TRUE NAVIGATION ARCHITECTURE ---
