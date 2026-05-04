@@ -1,88 +1,36 @@
-import streamlit as st
+
+
+   import streamlit as st
 from datetime import datetime
 
-# --- NEXUS // OMEGA: THE 100% ACCURACY BUILD ---
-st.set_page_config(
-    page_title="Nexus // Emergent", 
-    layout="wide", 
-    initial_sidebar_state="collapsed"
-)
+# --- NEXUS // OMEGA: THE COMPLETED ARCHITECTURE ---
+st.set_page_config(page_title="Nexus // Emergent", layout="wide", initial_sidebar_state="collapsed")
 
-# 💠 THE INVISIBLE ENGINE: DIRECT CSS & JS INJECTION
+# 💠 THE INVISIBLE CSS ENGINE (Match 1000244729_2.mp4 exactly)
 st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@500&display=swap');
     
-    /* 100% Pitch Black Background */
-    .stApp { 
-        background-color: #000000 !important; 
-        color: #FFFFFF !important; 
-        font-family: 'Inter', sans-serif !important; 
-    }
-
-    /* Hide Streamlit Branding */
+    .stApp { background-color: #000000 !important; color: #FFFFFF !important; font-family: 'Inter', sans-serif !important; }
     header, footer, #MainMenu { visibility: hidden !important; }
-    .block-container { padding: 0 !important; max-width: 100% !important; }
+    .block-container { padding: 0 !important; }
 
-    /* Tactical Top Nav */
-    .nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px 25px;
-        border-bottom: 1px solid #111;
-    }
-    .nav-logo { 
-        background: #CDFF00; 
-        color: black; 
-        font-weight: 800; 
-        padding: 4px 10px; 
-        font-size: 18px;
-    }
+    /* Top Nav Icons */
+    .nav-bar { display: flex; justify-content: space-around; align-items: center; padding: 15px; border-bottom: 1px solid #111; background: #000; }
+    .nav-icon { color: #444; font-size: 20px; cursor: pointer; transition: 0.3s; }
+    .nav-icon.active { color: #CDFF00; text-shadow: 0 0 10px #CDFF00; }
+    .nav-logo { background: #CDFF00; color: #000; font-weight: 900; padding: 2px 8px; font-size: 14px; }
 
-    /* Hero Typography */
-    .hero { padding: 40px 25px 20px 25px; }
-    .session { color: #333; font-family: 'JetBrains Mono'; font-size: 11px; letter-spacing: 2px; margin-bottom: 10px; }
-    .title { font-size: 42px; font-weight: 800; line-height: 1; letter-spacing: -1.5px; margin: 0; }
-    .neon-text { color: #CDFF00; }
-    .sub { color: #888; font-size: 15px; margin-top: 15px; line-height: 1.4; }
+    /* Hero Text Style */
+    .hero { padding: 40px 25px; }
+    .title { font-size: 40px; font-weight: 900; line-height: 1; letter-spacing: -1.5px; margin: 0; }
+    .highlight { color: #CDFF00; }
 
-    /* Module Grids */
-    .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #111; border-top: 1px solid #111; border-bottom: 1px solid #111; }
-    .card { background: #000; padding: 25px; min-height: 150px; position: relative; }
-    .label { color: #CDFF00; font-family: 'JetBrains Mono'; font-size: 9px; text-transform: uppercase; margin-bottom: 10px; display: block; }
-    .card-title { font-size: 20px; font-weight: 700; margin: 0; }
-    
-    /* Action Button */
-    .stButton>button {
-        width: 100% !important;
-        background: #CDFF00 !important;
-        color: black !important;
-        border: none !important;
-        border-radius: 0 !important;
-        font-weight: 800 !important;
-        height: 65px !important;
-        font-size: 16px !important;
-        text-transform: uppercase !important;
-        transition: 0.2s !important;
-    }
-    .stButton>button:active { transform: scale(0.98); }
-
-    /* Live Clock Styling */
-    #live-clock {
-        position: fixed;
-        bottom: 25px;
-        right: 25px;
-        font-family: 'JetBrains Mono';
-        color: #CDFF00;
-        font-weight: 700;
-        font-size: 18px;
-        letter-spacing: 1px;
-    }
+    /* Tactical Clock */
+    #live-clock { position: fixed; bottom: 20px; right: 20px; font-family: 'JetBrains Mono'; color: #CDFF00; font-size: 14px; z-index: 9999; }
     </style>
 
-    <!-- JS for the Moving Clock -->
-    <div id="live-clock">00:00:00</div>
+    <div id="live-clock">SYS_TIME: 00:00:00</div>
     <script>
         function updateClock() {
             const now = new Date();
@@ -92,44 +40,53 @@ st.markdown("""
             document.getElementById('live-clock').innerText = "SYS_TIME: " + time;
         }
         setInterval(updateClock, 1000);
-        updateClock();
     </script>
     """, unsafe_allow_html=True)
 
-# --- THE UI FRAMEWORK ---
+# --- NAVIGATION LOGIC ---
+if 'module' not in st.session_state:
+    st.session_state.module = "HOME"
 
-# 1. Navigation
-st.markdown('<div class="nav"><div class="nav-logo">N</div><div style="color:#333; font-size:20px;">○ ◬ □</div></div>', unsafe_allow_html=True)
+# Nav Bar UI
+cols = st.columns([1, 1, 1, 1, 1])
+with cols[0]: 
+    if st.button("N"): st.session_state.module = "HOME"
+with cols[1]: 
+    if st.button("👁️"): st.session_state.module = "VISION"
+with cols[2]: 
+    if st.button("🎙️"): st.session_state.module = "VOICE"
+with cols[3]: 
+    if st.button(">_"): st.session_state.module = "DEV"
+with cols[4]: 
+    if st.button("↺"): st.session_state.module = "HISTORY"
 
-# 2. Hero
-st.markdown("""
-    <div class="hero">
-        <div class="session">SESSION // 001</div>
-        <h1 class="title">Your <span class="neon-text">academic<br>weapon</span>, compiled<br>and armed.</h1>
-        <p class="sub">One tap to solve doubts with vision, voice, and dev console. No distractions. Just answers.</p>
-    </div>
+st.markdown("---")
+
+# --- SCREEN SWITCHER ---
+if st.session_state.module == "HOME":
+    st.markdown("""
+        <div class="hero">
+            <div style="color:#444; font-family:'JetBrains Mono'; font-size:10px;">—— SESSION // 001</div>
+            <h1 class="title">Your <span class="highlight">academic<br>weapon</span>, compiled<br>and armed.</h1>
+        </div>
     """, unsafe_allow_html=True)
+    st.info("Select a module from the top bar to begin analysis.")
 
-# 3. Tactical Modules
-col1, col2 = st.columns(2)
-with col1:
-    st.markdown('<div class="card"><span class="label">MODULE 01 // VISION</span><h3 class="card-title">Snap it.</h3></div>', unsafe_allow_html=True)
-    st.camera_input("SCAN", label_visibility="collapsed")
-with col2:
-    st.markdown('<div class="card"><span class="label">MODULE 02 // VOICE</span><h3 class="card-title">Ask it.</h3></div>', unsafe_allow_html=True)
-    st.markdown('<div style="height:100px; display:flex; align-items:center; justify-content:center; border:1px solid #111;">🎙️</div>', unsafe_allow_html=True)
+elif st.session_state.module == "VISION":
+    st.markdown("<h2 style='padding:0 25px;'>VISION SCANNER</h2>", unsafe_allow_html=True)
+    st.camera_input("SCAN_INPUT", label_visibility="collapsed")
+    st.button("SOLVE WITH NEXUS")
 
-# 4. Global Stats Area
-st.markdown('<div class="grid-container">', unsafe_allow_html=True)
-s1, s2, s3, s4 = st.columns(4)
-stats = [("Total Doubts", "00"), ("Vision", "00"), ("Voice", "00"), ("Code", "00")]
-for col, (lbl, val) in zip([s1, s2, s3, s4], stats):
-    with col:
-        st.markdown(f'<div style="padding:20px; border:1px solid #111;"><span style="color:#444; font-size:9px; text-transform:uppercase;">{lbl}</span><br><span style="font-size:24px; font-weight:700;">{val}</span></div>', unsafe_allow_html=True)
+elif st.session_state.module == "VOICE":
+    st.markdown("<h2 style='padding:0 25px;'>VOICE COMMAND</h2>", unsafe_allow_html=True)
+    st.markdown("<div style='text-align:center; padding:50px; border:1px solid #111;'>🎙️ Listening for Query...</div>", unsafe_allow_html=True)
+    st.button("ASK NEXUS")
 
-# 5. The Trigger
-st.markdown("<br>", unsafe_allow_html=True)
-if st.button("Start Solving"):
-    st.balloons()
+elif st.session_state.module == "DEV":
+    st.markdown("<h2 style='padding:0 25px;'>DEV MODE</h2>", unsafe_allow_html=True)
+    st.code("// Enter code for debugging\nfunction nexus() {\n  return 'ready';\n}", language='javascript')
+    st.button("EXECUTE CODE")
 
-
+elif st.session_state.module == "HISTORY":
+    st.markdown("<h2 style='padding:0 25px;'>ARCHIVE</h2>", unsafe_allow_html=True)
+    st.write("Your intellectual runbook is empty.")
