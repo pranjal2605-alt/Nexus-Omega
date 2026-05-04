@@ -1,136 +1,147 @@
 import streamlit as st
 
-# --- NEXUS // OMEGA: FINAL PIXEL-PERFECT SYNC ---
+# --- NEXUS // OMEGA: PIXEL-PERFECT GEOMETRY ---
 st.set_page_config(page_title="Nexus // Emergent", layout="wide", initial_sidebar_state="collapsed")
 
-# 💠 THE ENGINE: HIGH-FIDELITY TACTICAL OVERRIDE
 st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@500;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@500;800&display=swap');
     
-    /* True Onyx Canvas */
-    .stApp { background-color: #000000 !important; color: #FFFFFF !important; font-family: 'Inter', sans-serif !important; }
-    header, footer, #MainMenu { visibility: hidden !important; height: 0; }
-    .block-container { padding: 0 !important; max-width: 100% !important; }
+    /* NUCLEAR THEME OVERRIDE */
+    .stApp { background-color: #000000 !important; }
+    header, footer, .stDeployButton, [data-testid="stToolbar"] { display: none !important; }
+    .block-container { padding: 0 !important; margin: 0 !important; max-width: 100% !important; }
 
-    /* REFINED COLOR BLOCKING */
-    :root { 
-        --volt: #CDFF00;    /* The Sharp Lime */
-        --vision: #A855F7;  /* Deep Purple Block */
-        --voice: #EC4899;   /* Deep Pink Block */
-        --dev: #06B6D4;     /* Terminal Cyan */
-        --steel: #FFFFFF;   
-        --smoke: #888888;
-    }
-
-    /* NAVIGATION: Geometric Icons Match */
-    .top-nav {
+    /* TOP NAV: SHARP GEOMETRY */
+    .nav-wrapper {
         display: flex; justify-content: space-between; align-items: center;
-        padding: 50px 40px 20px 40px;
+        padding: 55px 45px 25px 45px; background: #000;
     }
-    .n-logo { 
-        background: var(--volt); color: #000; font-weight: 900; 
-        padding: 10px 20px; font-size: 26px; border-radius: 2px;
-        box-shadow: 0 0 30px rgba(205, 255, 0, 0.3);
+    .n-logo-box {
+        background: #CDFF00 !important; color: #000 !important;
+        font-family: 'Inter', sans-serif !important; font-weight: 900 !important;
+        font-size: 28px !important; padding: 12px 22px !important;
+        line-height: 0.8 !important; border-radius: 0px !important; /* Sharp corners */
     }
-    .nav-icons { display: flex; gap: 35px; align-items: center; }
-    .nav-icons svg { width: 22px; height: 22px; fill: #444; transition: 0.2s; }
-    .nav-icons svg.active { fill: var(--volt); opacity: 1; filter: drop-shadow(0 0 5px var(--volt)); }
+    .nav-icons-right { display: flex; gap: 32px; align-items: center; }
+    
+    /* CUSTOM ICON SHAPES: Matching the "Flashy" but colorless requirement */
+    .t-icon { width: 20px; height: 20px; fill: #222; transition: 0.2s; }
+    .t-icon.active { fill: #CDFF00 !important; filter: drop-shadow(0 0 8px rgba(205,255,0,0.5)); }
 
-    /* HERO: Zero-Space Typography & Block Highlights */
-    .hero-section { padding: 80px 40px; }
-    .session-tag { color: #333; font-family: 'JetBrains Mono'; font-size: 11px; letter-spacing: 6px; margin-bottom: 12px; font-weight: 800; }
-    .session-tag span { color: var(--volt); }
-
-    .main-title { 
-        font-size: 88px; font-weight: 900; line-height: 0.8; 
-        letter-spacing: -6px; margin: 0; color: var(--steel);
-        text-transform: none;
+    /* HERO: MAXIMUM COMPRESSION */
+    .hero-container { padding: 70px 45px; background: #000; }
+    .session-indicator { 
+        font-family: 'JetBrains Mono' !important; color: #1A1A1A !important; 
+        font-size: 11px !important; letter-spacing: 10px !important; margin-bottom: 20px;
     }
-    .highlight { color: var(--volt); }
-    
-    .sub-copy { color: var(--smoke); font-size: 20px; margin-top: 35px; max-width: 580px; line-height: 1.4; letter-spacing: -0.5px; }
-    
-    /* THE COLOR BLOCKS: Matching the video details */
-    .block-v { background: var(--vision); color: #FFF; padding: 0 8px; border-radius: 2px; font-weight: 800; }
-    .block-vo { background: var(--voice); color: #FFF; padding: 0 8px; border-radius: 2px; font-weight: 800; }
 
-    /* GRID: High-Contrast Tiles */
-    .module-grid { display: grid; grid-template-columns: 1fr 1fr; background: #111; gap: 1px; border-top: 1px solid #111; }
-    .mod-card { background: #000; padding: 60px 40px; position: relative; min-height: 250px; }
+    .main-headline {
+        font-family: 'Inter', sans-serif !important;
+        font-size: 92px !important; font-weight: 900 !important;
+        line-height: 0.78 !important; letter-spacing: -8px !important;
+        color: #FFFFFF !important; margin: 0 !important;
+    }
+    .main-headline span { color: #CDFF00 !important; }
+
+    /* SUBHEAD BLOCK HIGHLIGHTS */
+    .sub-text { 
+        color: #555 !important; font-size: 20px !important; font-weight: 500 !important;
+        margin-top: 45px !important; max-width: 620px !important; line-height: 1.3 !important;
+        letter-spacing: -0.5px !important;
+    }
+    .v-block { background: #A855F7 !important; color: #FFF !important; padding: 0px 8px !important; font-weight: 800 !important; }
+    .vo-block { background: #EC4899 !important; color: #FFF !important; padding: 0px 8px !important; font-weight: 800 !important; }
+
+    /* TACTICAL GRID: ZERO RADIUS */
+    .grid-container { 
+        display: grid; grid-template-columns: 1fr 1fr; 
+        background: #0A0A0A !important; gap: 1px !important; border-top: 1px solid #111 !important;
+    }
+    .grid-item { background: #000 !important; padding: 75px 45px !important; position: relative; }
     
-    .mod-tag { font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: 4px; font-weight: 800; margin-bottom: 20px; display: block; }
-    .tag-v { color: var(--vision); }
-    .tag-vo { color: var(--voice); }
-    .tag-d { color: var(--dev); }
-
-    .mod-name { font-size: 42px; font-weight: 900; margin: 0; letter-spacing: -2px; }
-    .mod-desc { color: #555; font-size: 16px; margin-top: 15px; line-height: 1.4; max-width: 80%; }
-
-    /* The "Arrow" Interaction Box */
-    .action-box { 
-        position: absolute; top: 60px; right: 40px; 
-        width: 50px; height: 50px; background: #0A0A0A; 
-        display: flex; align-items: center; justify-content: center;
-        border: 1px solid #1A1A1A; color: var(--volt);
+    .tag-mono { 
+        font-family: 'JetBrains Mono' !important; font-size: 10px !important; 
+        letter-spacing: 5px !important; margin-bottom: 25px; display: block; font-weight: 800 !important;
+    }
+    .item-title { 
+        font-size: 44px !important; font-weight: 900 !important; 
+        letter-spacing: -3px !important; color: #FFF !important; margin: 0 !important;
+    }
+    .item-desc { 
+        color: #333 !important; font-size: 17px !important; margin-top: 18px !important; 
+        max-width: 85%; line-height: 1.4 !important; letter-spacing: -0.2px !important;
+    }
+    
+    /* SQUARE INTERACTION BOX */
+    .corner-btn {
+        position: absolute; top: 75px; right: 45px;
+        width: 52px; height: 52px; border: 1px solid #111;
+        display: flex; align-items: center; justify-content: center; color: #CDFF00;
+        font-size: 24px; font-weight: 100;
     }
     </style>
     """, unsafe_allow_html=True)
 
-# --- THE UI ---
-
-# Top Nav
+# --- NAV ---
 st.markdown("""
-    <div class="top-nav">
-        <div class="n-logo">N</div>
-        <div class="nav-icons">
-            <svg class="active" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8 10H5v-2h7v2zm7-4H5V8h14v2z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9z"/></svg>
+    <div class="nav-wrapper">
+        <div class="n-logo-box">N</div>
+        <div class="nav-icons-right">
+            <!-- Terminal (Active) -->
+            <svg class="t-icon active" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="0" stroke="currentColor" fill="none" stroke-width="2"/><path d="M7 14l3-2-3-2M12 14h5" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+            <!-- Vision -->
+            <svg class="t-icon" viewBox="0 0 24 24"><path d="M12 5C7 5 2.73 8.11 1 12c1.73 3.89 6 7 11 7s9.27-3.11 11-7c-1.73-3.89-6-7-11-7zm0 11.5c-2.48 0-4.5-2.02-4.5-4.5S9.52 7.5 12 7.5s4.5 2.02 4.5 4.5-2.02 4.5-4.5 4.5z" fill="currentColor"/></svg>
+            <!-- Voice -->
+            <svg class="t-icon" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" fill="currentColor"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v3" stroke="currentColor" stroke-width="2"/></svg>
+            <!-- History -->
+            <svg class="t-icon" viewBox="0 0 24 24"><path d="M13 3a9 9 0 109 9" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2"/></svg>
         </div>
     </div>
 """, unsafe_allow_html=True)
 
-# Hero Header
+# --- HERO ---
 st.markdown("""
-    <div class="hero-section">
-        <div class="session-tag">————— SESSION // <span>000</span></div>
-        <h1 class="main-title">Your <span class="highlight">academic<br>weapon</span>, compiled<br>and armed._</h1>
-        <p class="sub-copy">One tap to solve doubts with <span class="block-v">vision</span>, <span class="block-vo">voice</span>, and a full developer console. No distractions. Just answers.</p>
+    <div class="hero-container">
+        <div class="session-indicator">————— SESSION // <span>000</span></div>
+        <h1 class="main-headline">Your <span>academic<br>weapon</span>, compiled<br>and armed._</h1>
+        <p class="sub-text">One tap to solve doubts with <span class="v-block">vision</span>, <span class="vo-block">voice</span>, and a full developer console. No distractions. Just answers.</p>
     </div>
 """, unsafe_allow_html=True)
 
-# Grid
-st.markdown('<div class="module-grid">', unsafe_allow_html=True)
+# --- GRID ---
+st.markdown('<div class="grid-container">', unsafe_allow_html=True)
 
-c1, c2 = st.columns(2)
-with c1:
-    st.markdown("""<div class="mod-card">
-        <span class="mod-tag tag-v">SNAP IT. SOLVE IT.</span><h3 class="mod-name">Vision</h3>
-        <p class="mod-desc">Upload a photo of a textbook problem. Nexus will solve it step-by-step.</p>
-        <div class="action-box">→</div>
+col1, col2 = st.columns(2)
+with col1:
+    st.markdown("""<div class="grid-item">
+        <span class="tag-mono" style="color:#A855F7">SNAP IT. SOLVE IT.</span>
+        <h2 class="item-title">Vision</h2>
+        <p class="item-desc">High-fidelity OCR and spatial reasoning for complex diagrams and text.</p>
+        <div class="corner-btn">→</div>
     </div>""", unsafe_allow_html=True)
-with c2:
-    st.markdown("""<div class="mod-card">
-        <span class="mod-tag tag-vo">ASK OUT LOUD.</span><h3 class="mod-name">Voice</h3>
-        <p class="mod-desc">Hold the mic and get a concise answer you can read or play back.</p>
-        <div class="action-box">→</div>
+with col2:
+    st.markdown("""<div class="grid-item">
+        <span class="tag-mono" style="color:#EC4899">ASK OUT LOUD.</span>
+        <h2 class="item-title">Voice</h2>
+        <p class="item-desc">Low-latency natural language processing for hands-free intellectual queries.</p>
+        <div class="corner-btn">→</div>
     </div>""", unsafe_allow_html=True)
 
-c3, c4 = st.columns(2)
-with c3:
-    st.markdown("""<div class="mod-card" style="border-top:1px solid #111;">
-        <span class="mod-tag tag-d">DEBUG. EXPLAIN. BOILERPLATE.</span><h3 class="mod-name">Dev Mode</h3>
-        <p class="mod-desc">Paste code to fix bugs or scaffold setup for any IDE.</p>
-        <div class="action-box">→</div>
+col3, col4 = st.columns(2)
+with col3:
+    st.markdown("""<div class="grid-item">
+        <span class="tag-mono" style="color:#06B6D4">DEBUG. EXPLAIN. BOILERPLATE.</span>
+        <h2 class="item-title">Dev Mode</h2>
+        <p class="item-desc">A sandbox for code execution, logic verification, and script scaffolding.</p>
+        <div class="corner-btn">→</div>
     </div>""", unsafe_allow_html=True)
-with c4:
-    st.markdown("""<div class="mod-card" style="border-top:1px solid #111;">
-        <span class="mod-tag" style="color:var(--volt); opacity:0.6;">INTEL RUNBOOK</span><h3 class="mod-name">History</h3>
-        <p class="mod-desc">Access every past solution and voice query in one place.</p>
-        <div class="action-box">→</div>
+with col4:
+    st.markdown("""<div class="grid-item">
+        <span class="tag-mono" style="color:#CDFF00">INTEL RUNBOOK</span>
+        <h2 class="item-title">History</h2>
+        <p class="item-desc">Immutable log of every query, solution, and generated artifact.</p>
+        <div class="corner-btn">→</div>
     </div>""", unsafe_allow_html=True)
 
 st.markdown('</div>', unsafe_allow_html=True)
