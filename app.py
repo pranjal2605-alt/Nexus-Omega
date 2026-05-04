@@ -1,84 +1,87 @@
 import streamlit as st
 
-# --- NEXUS // OMEGA: PIXEL-PERFECT GEOMETRY ---
+# --- NEXUS // OMEGA: FULL-SCREEN CALIBRATION ---
 st.set_page_config(page_title="Nexus // Emergent", layout="wide", initial_sidebar_state="collapsed")
 
 st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@500;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@800&display=swap');
     
-    /* NUCLEAR THEME OVERRIDE */
+    /* 1. FORCE FULL WIDTH & BLACKOUT */
     .stApp { background-color: #000000 !important; }
     header, footer, .stDeployButton, [data-testid="stToolbar"] { display: none !important; }
-    .block-container { padding: 0 !important; margin: 0 !important; max-width: 100% !important; }
+    
+    /* This part kills the "50% centered" look and forces 100% edge-to-edge */
+    .block-container { 
+        max-width: 100% !important; 
+        padding: 0 !important; 
+        margin: 0 !important; 
+    }
 
-    /* TOP NAV: SHARP GEOMETRY */
+    /* 2. TOP NAV: Edge-to-Edge */
     .nav-wrapper {
         display: flex; justify-content: space-between; align-items: center;
-        padding: 55px 45px 25px 45px; background: #000;
+        padding: 4vw 4vw 2vw 4vw; background: #000;
     }
     .n-logo-box {
         background: #CDFF00 !important; color: #000 !important;
         font-family: 'Inter', sans-serif !important; font-weight: 900 !important;
-        font-size: 28px !important; padding: 12px 22px !important;
-        line-height: 0.8 !important; border-radius: 0px !important; /* Sharp corners */
+        font-size: 2.5vw !important; padding: 0.8vw 1.5vw !important;
+        line-height: 0.8 !important; border-radius: 0px !important;
     }
-    .nav-icons-right { display: flex; gap: 32px; align-items: center; }
-    
-    /* CUSTOM ICON SHAPES: Matching the "Flashy" but colorless requirement */
-    .t-icon { width: 20px; height: 20px; fill: #222; transition: 0.2s; }
-    .t-icon.active { fill: #CDFF00 !important; filter: drop-shadow(0 0 8px rgba(205,255,0,0.5)); }
+    .nav-icons-right { display: flex; gap: 2.5vw; align-items: center; }
+    .t-icon { width: 1.8vw; height: 1.8vw; fill: #1A1A1A; }
+    .t-icon.active { fill: #CDFF00 !important; filter: drop-shadow(0 0 10px rgba(205,255,0,0.6)); }
 
-    /* HERO: MAXIMUM COMPRESSION */
-    .hero-container { padding: 70px 45px; background: #000; }
+    /* 3. HERO: Massive Scalable Typography */
+    .hero-container { padding: 4vw; background: #000; }
     .session-indicator { 
-        font-family: 'JetBrains Mono' !important; color: #1A1A1A !important; 
-        font-size: 11px !important; letter-spacing: 10px !important; margin-bottom: 20px;
+        font-family: 'JetBrains Mono' !important; color: #111 !important; 
+        font-size: 0.9vw !important; letter-spacing: 0.8vw !important; margin-bottom: 2vw;
     }
 
     .main-headline {
         font-family: 'Inter', sans-serif !important;
-        font-size: 92px !important; font-weight: 900 !important;
-        line-height: 0.78 !important; letter-spacing: -8px !important;
+        font-size: 8.5vw !important; /* Scaled to screen width */
+        font-weight: 900 !important;
+        line-height: 0.78 !important; letter-spacing: -0.6vw !important;
         color: #FFFFFF !important; margin: 0 !important;
     }
     .main-headline span { color: #CDFF00 !important; }
 
-    /* SUBHEAD BLOCK HIGHLIGHTS */
+    /* 4. SUBHEAD HIGHLIGHTS */
     .sub-text { 
-        color: #555 !important; font-size: 20px !important; font-weight: 500 !important;
-        margin-top: 45px !important; max-width: 620px !important; line-height: 1.3 !important;
-        letter-spacing: -0.5px !important;
+        color: #444 !important; font-size: 1.8vw !important; font-weight: 600 !important;
+        margin-top: 3vw !important; max-width: 55vw !important; line-height: 1.3 !important;
     }
-    .v-block { background: #A855F7 !important; color: #FFF !important; padding: 0px 8px !important; font-weight: 800 !important; }
-    .vo-block { background: #EC4899 !important; color: #FFF !important; padding: 0px 8px !important; font-weight: 800 !important; }
+    .v-block { background: #A855F7 !important; color: #FFF !important; padding: 0 0.5vw; }
+    .vo-block { background: #EC4899 !important; color: #FFF !important; padding: 0 0.5vw; }
 
-    /* TACTICAL GRID: ZERO RADIUS */
+    /* 5. TACTICAL GRID: Locked to Screen Edges */
     .grid-container { 
         display: grid; grid-template-columns: 1fr 1fr; 
-        background: #0A0A0A !important; gap: 1px !important; border-top: 1px solid #111 !important;
+        background: #111 !important; gap: 1px !important; border-top: 1px solid #111 !important;
     }
-    .grid-item { background: #000 !important; padding: 75px 45px !important; position: relative; }
+    .grid-item { background: #000 !important; padding: 6vw 4vw !important; position: relative; }
     
     .tag-mono { 
-        font-family: 'JetBrains Mono' !important; font-size: 10px !important; 
-        letter-spacing: 5px !important; margin-bottom: 25px; display: block; font-weight: 800 !important;
+        font-family: 'JetBrains Mono' !important; font-size: 0.8vw !important; 
+        letter-spacing: 0.4vw !important; margin-bottom: 1.5vw; display: block; font-weight: 800 !important;
     }
     .item-title { 
-        font-size: 44px !important; font-weight: 900 !important; 
-        letter-spacing: -3px !important; color: #FFF !important; margin: 0 !important;
+        font-size: 4vw !important; font-weight: 900 !important; 
+        letter-spacing: -0.2vw !important; color: #FFF !important; margin: 0 !important;
     }
     .item-desc { 
-        color: #333 !important; font-size: 17px !important; margin-top: 18px !important; 
-        max-width: 85%; line-height: 1.4 !important; letter-spacing: -0.2px !important;
+        color: #2A2A2A !important; font-size: 1.3vw !important; margin-top: 1.5vw !important; 
+        max-width: 80%; line-height: 1.4 !important;
     }
     
-    /* SQUARE INTERACTION BOX */
     .corner-btn {
-        position: absolute; top: 75px; right: 45px;
-        width: 52px; height: 52px; border: 1px solid #111;
+        position: absolute; top: 6vw; right: 4vw;
+        width: 4.5vw; height: 4.5vw; border: 1px solid #111;
         display: flex; align-items: center; justify-content: center; color: #CDFF00;
-        font-size: 24px; font-weight: 100;
+        font-size: 2vw;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -88,14 +91,10 @@ st.markdown("""
     <div class="nav-wrapper">
         <div class="n-logo-box">N</div>
         <div class="nav-icons-right">
-            <!-- Terminal (Active) -->
-            <svg class="t-icon active" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="0" stroke="currentColor" fill="none" stroke-width="2"/><path d="M7 14l3-2-3-2M12 14h5" stroke="currentColor" stroke-width="2" fill="none"/></svg>
-            <!-- Vision -->
-            <svg class="t-icon" viewBox="0 0 24 24"><path d="M12 5C7 5 2.73 8.11 1 12c1.73 3.89 6 7 11 7s9.27-3.11 11-7c-1.73-3.89-6-7-11-7zm0 11.5c-2.48 0-4.5-2.02-4.5-4.5S9.52 7.5 12 7.5s4.5 2.02 4.5 4.5-2.02 4.5-4.5 4.5z" fill="currentColor"/></svg>
-            <!-- Voice -->
-            <svg class="t-icon" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" fill="currentColor"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v3" stroke="currentColor" stroke-width="2"/></svg>
-            <!-- History -->
-            <svg class="t-icon" viewBox="0 0 24 24"><path d="M13 3a9 9 0 109 9" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2"/></svg>
+            <svg class="t-icon active" viewBox="0 0 24 24"><path d="M2 4h20v16H2V4zm5 9l3-2-3-2m5 4h5"/></svg>
+            <svg class="t-icon" viewBox="0 0 24 24"><path d="M12 7a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6z"/></svg>
+            <svg class="t-icon" viewBox="0 0 24 24"><path d="M9 4h6v10H9V4zm-4 8v2a7 7 0 0014 0v-2"/></svg>
+            <svg class="t-icon" viewBox="0 0 24 24"><path d="M13 7h-2v6h5v-2h-3V7zM4 4h16v16H4V4z"/></svg>
         </div>
     </div>
 """, unsafe_allow_html=True)
@@ -111,37 +110,15 @@ st.markdown("""
 
 # --- GRID ---
 st.markdown('<div class="grid-container">', unsafe_allow_html=True)
+c1, c2 = st.columns(2)
+with c1:
+    st.markdown("""<div class="grid-item"><span class="tag-mono" style="color:#A855F7">SNAP IT. SOLVE IT.</span><h2 class="item-title">Vision</h2><p class="item-desc">High-fidelity OCR and spatial reasoning for complex diagrams.</p><div class="corner-btn">→</div></div>""", unsafe_allow_html=True)
+with c2:
+    st.markdown("""<div class="grid-item"><span class="tag-mono" style="color:#EC4899">ASK OUT LOUD.</span><h2 class="item-title">Voice</h2><p class="item-desc">Low-latency natural language processing for hands-free queries.</p><div class="corner-btn">→</div></div>""", unsafe_allow_html=True)
 
-col1, col2 = st.columns(2)
-with col1:
-    st.markdown("""<div class="grid-item">
-        <span class="tag-mono" style="color:#A855F7">SNAP IT. SOLVE IT.</span>
-        <h2 class="item-title">Vision</h2>
-        <p class="item-desc">High-fidelity OCR and spatial reasoning for complex diagrams and text.</p>
-        <div class="corner-btn">→</div>
-    </div>""", unsafe_allow_html=True)
-with col2:
-    st.markdown("""<div class="grid-item">
-        <span class="tag-mono" style="color:#EC4899">ASK OUT LOUD.</span>
-        <h2 class="item-title">Voice</h2>
-        <p class="item-desc">Low-latency natural language processing for hands-free intellectual queries.</p>
-        <div class="corner-btn">→</div>
-    </div>""", unsafe_allow_html=True)
-
-col3, col4 = st.columns(2)
-with col3:
-    st.markdown("""<div class="grid-item">
-        <span class="tag-mono" style="color:#06B6D4">DEBUG. EXPLAIN. BOILERPLATE.</span>
-        <h2 class="item-title">Dev Mode</h2>
-        <p class="item-desc">A sandbox for code execution, logic verification, and script scaffolding.</p>
-        <div class="corner-btn">→</div>
-    </div>""", unsafe_allow_html=True)
-with col4:
-    st.markdown("""<div class="grid-item">
-        <span class="tag-mono" style="color:#CDFF00">INTEL RUNBOOK</span>
-        <h2 class="item-title">History</h2>
-        <p class="item-desc">Immutable log of every query, solution, and generated artifact.</p>
-        <div class="corner-btn">→</div>
-    </div>""", unsafe_allow_html=True)
-
+c3, c4 = st.columns(2)
+with c3:
+    st.markdown("""<div class="grid-item"><span class="tag-mono" style="color:#06B6D4">DEBUG. EXPLAIN. BOILERPLATE.</span><h2 class="item-title">Dev Mode</h2><p class="item-desc">A sandbox for code execution, logic verification, and scaffolding.</p><div class="corner-btn">→</div></div>""", unsafe_allow_html=True)
+with c4:
+    st.markdown("""<div class="grid-item"><span class="tag-mono" style="color:#CDFF00">INTEL RUNBOOK</span><h2 class="item-title">History</h2><p class="item-desc">Immutable log of every query, solution, and generated artifact.</p><div class="corner-btn">→</div></div>""", unsafe_allow_html=True)
 st.markdown('</div>', unsafe_allow_html=True)
