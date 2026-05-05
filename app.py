@@ -1,134 +1,153 @@
 import streamlit as st
 from datetime import datetime
-import time
 
-# --- NEXUS // OMEGA: PIXEL-PERFECT MASTER BUILD ---
-st.set_page_config(page_title="Nexus // Emergent", layout="wide", initial_sidebar_state="collapsed")
+# --- NEXUS // OMEGA: PIXEL-PERFECT MASTER ---
+st.set_page_config(
+    page_title="Nexus // Emergent", 
+    layout="wide", 
+    initial_sidebar_state="collapsed"
+)
 
-# 1. LIVE SYSTEM ENGINE (Clock & Navigation)
+# Initialize Session State
 if 'page' not in st.session_state:
     st.session_state.page = 'home'
 
-# Live Ticking Clock Logic
+# Dynamic Clock
 curr_time = datetime.now().strftime("%H:%M:%S")
 
+# --- THE BRUTE FORCE CSS ---
 st.markdown(f"""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@500;800&display=swap');
     
-    :root {{ --volt: #CDFF00; --bg: #000000; --dark-grey: #111111; }}
-
-    /* GLOBAL DOM RESET */
-    [data-testid="stAppViewContainer"] {{ background-color: var(--bg) !important; }}
-    [data-testid="stMainViewContainer"] > section > div {{ max-width: 100vw !important; padding: 0 !important; }}
-    header, footer, .stDeployButton, [data-testid="stToolbar"] {{ display: none !important; }}
-
-    /* TOP UTILITY: STATUS & TICKING CLOCK */
-    .top-utility-bar {{
-        display: flex; justify-content: space-between; align-items: center;
-        padding: 15px 50px; background: var(--bg); border-bottom: 1px solid var(--dark-grey);
+    :root {{ 
+        --volt: #CDFF00; 
+        --bg: #000000; 
     }}
-    .sys-clock {{ font-family: 'JetBrains Mono'; color: var(--volt); font-size: 13px; letter-spacing: 4px; }}
-    
-    /* TOP RIGHT ICONS: Tactical Geometry */
-    .nav-icons-right {{ display: flex; gap: 25px; align-items: center; }}
-    .t-icon {{ width: 20px; height: 20px; border: 1.5px solid #222; border-radius: 2px; }}
-    .t-icon.active {{ border-color: var(--volt); background: var(--volt); box-shadow: 0 0 10px var(--volt); }}
 
-    /* LOGO & NAV */
-    .nav-wrapper {{ display: flex; justify-content: space-between; padding: 40px 50px 20px 50px; }}
+    /* 1. KILL ALL STREAMLIT DEFAULTS */
+    [data-testid="stAppViewContainer"], [data-testid="stMainViewContainer"], .stApp {{
+        background-color: var(--bg) !important;
+    }}
+    [data-testid="stHeader"], [data-testid="stToolbar"], .stDeployButton {{
+        display: none !important;
+    }}
+    [data-testid="stMainViewContainer"] > section > div {{
+        max-width: 100vw !important; padding: 0 !important;
+    }}
+
+    /* 2. TOP BAR & TICKING CLOCK */
+    .top-utility {{
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 20px 50px; border-bottom: 1px solid #111; width: 100%;
+    }}
+    .sys-clock {{ font-family: 'JetBrains Mono'; color: var(--volt); font-size: 14px; letter-spacing: 4px; }}
+    
+    .nav-icons-right {{ display: flex; gap: 20px; }}
+    .t-icon {{ 
+        width: 18px; height: 18px; border: 1.5px solid #222; 
+        display: flex; align-items: center; justify-content: center;
+    }}
+    .t-icon.active {{ border-color: var(--volt); box-shadow: 0 0 10px var(--volt); }}
+
+    /* 3. LOGO & SQUASHED HEADLINE */
+    .nav-wrapper {{ padding: 40px 50px 10px 50px; }}
     .n-logo {{
         background: var(--volt); color: #000; font-family: 'Inter'; font-weight: 900;
         font-size: 32px; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;
     }}
-
-    /* SEARCH BAR: ASK NEXUS */
-    .nexus-search-container {{ padding: 0 50px 40px 50px; }}
-    .nexus-input {{
-        background: #080808; border: 1px solid #151515; color: #555;
-        font-family: 'JetBrains Mono'; padding: 20px; width: 100%;
-        font-size: 14px; letter-spacing: 2px; outline: none;
-    }}
-
-    /* THE HEADLINE: MAXIMUM SQUASH */
     .main-headline {{
-        font-family: 'Inter'; font-size: clamp(60px, 9vw, 130px); font-weight: 900;
-        line-height: 0.76; letter-spacing: -0.07em; color: #FFF; padding: 0 50px 60px 50px;
+        font-family: 'Inter'; font-size: clamp(60px, 9vw, 135px); font-weight: 900;
+        line-height: 0.76; letter-spacing: -0.07em; color: #FFF; padding: 20px 50px 40px 50px;
     }}
     .main-headline span {{ color: var(--volt); }}
 
-    /* THE GRID */
-    .grid-container {{ 
-        display: grid; grid-template-columns: 1fr 1fr; background: var(--dark-grey); gap: 1px;
-        width: 100%; border-top: 1px solid var(--dark-grey);
+    /* 4. ASK NEXUS: FIXING THE WHITE BACKGROUND */
+    div[data-baseweb="input"] {{
+        background-color: #080808 !important;
+        border: 1px solid #1A1A1A !important;
     }}
-    .grid-item {{ background: var(--bg); padding: 80px 50px; position: relative; transition: 0.3s; }}
-    .item-title {{ font-size: 50px; font-weight: 900; letter-spacing: -3px; color: #FFF; }}
-    .tag-mono {{ font-family: 'JetBrains Mono'; font-size: 11px; letter-spacing: 6px; color: #333; }}
-    
-    /* BUTTON OVERLAY (HIDDEN STREAMLIT BUTTONS) */
+    input[data-testid="stWidgetLabel"] {{ display: none !important; }}
+    input {{
+        color: #FFFFFF !important;
+        background-color: transparent !important;
+        font-family: 'JetBrains Mono' !important;
+        padding: 20px !important;
+    }}
+    .stTextInput {{ padding: 0 50px 50px 50px !important; }}
+
+    /* 5. TACTICAL GRID */
+    .grid-container {{ 
+        display: grid; grid-template-columns: 1fr 1fr; background: #111; gap: 1px; width: 100%;
+    }}
+    .grid-item {{ background: var(--bg); padding: 100px 50px; transition: 0.3s; cursor: pointer; }}
+    .grid-item:hover {{ background: #050505; }}
+    .item-title {{ font-size: 55px; font-weight: 900; letter-spacing: -3px; color: #FFF; margin: 0; }}
+    .tag-mono {{ font-family: 'JetBrains Mono'; font-size: 11px; letter-spacing: 6px; color: #444; margin-bottom: 15px; display: block; }}
+
+    /* NATIVE BUTTON OVERLAY */
     .stButton > button {{
         background: transparent !important; border: none !important; color: transparent !important;
-        position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 10;
+        height: 250px !important; width: 100% !important; position: absolute; z-index: 10;
     }}
     </style>
     """, unsafe_allow_html=True)
 
-# 2. TOP BAR
+# --- RENDER TOP BAR ---
 st.markdown(f"""
-    <div class="top-utility-bar">
-        <div style="display:flex; gap:10px;">
+    <div class="top-utility">
+        <div style="display:flex; gap:10px; align-items:center;">
             <div style="width:8px; height:8px; border-radius:50%; background:var(--volt);"></div>
-            <div style="width:8px; height:8px; border-radius:50%; background:#222;"></div>
+            <div class="sys-clock">SYSTEM_TIME // {curr_time}</div>
         </div>
-        <div class="sys-clock" id="clock">{curr_time}</div>
         <div class="nav-icons-right">
-            <div class="t-icon active"></div>
+            <div class="t-icon active"><div style="width:6px; height:6px; background:var(--volt);"></div></div>
             <div class="t-icon"></div>
             <div class="t-icon"></div>
         </div>
     </div>
 """, unsafe_allow_html=True)
 
-# 3. PAGE ROUTING
+# --- HOME PAGE ---
 if st.session_state.page == 'home':
-    st.markdown("""<div class="nav-wrapper"><div class="n-logo">N</div></div>""", unsafe_allow_html=True)
-    st.markdown("""<h1 class="main-headline">Your <span>academic<br>weapon</span>, compiled<br>and armed._</h1>""", unsafe_allow_html=True)
+    st.markdown('<div class="nav-wrapper"><div class="n-logo">N</div></div>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-headline">Your <span>academic<br>weapon</span>, compiled<br>and armed._</h1>', unsafe_allow_html=True)
     
-    # ASK NEXUS SEARCH
-    st.markdown('<div class="nexus-search-container">', unsafe_allow_html=True)
-    query = st.text_input("ASK_NEXUS:", placeholder="INPUT QUERY OR PASTE CODE BLOCK...", label_visibility="collapsed")
-    st.markdown('</div>', unsafe_allow_html=True)
+    # ASK NEXUS
+    st.text_input("Ask Nexus", placeholder="ASK NEXUS // TYPE YOUR DOUBT HERE...", label_visibility="collapsed")
 
     # QUAD GRID
     st.markdown('<div class="grid-container">', unsafe_allow_html=True)
-    col1, col2 = st.columns(2)
-    with col1:
+    c1, c2 = st.columns(2)
+    with c1:
         st.markdown('<div class="grid-item"><span class="tag-mono">MODULE_01</span><h2 class="item-title">Vision</h2></div>', unsafe_allow_html=True)
-        if st.button("v"): st.session_state.page = 'vision'
-    with col2:
+        if st.button("V"): st.session_state.page = 'vision'
+    with c2:
         st.markdown('<div class="grid-item"><span class="tag-mono">MODULE_02</span><h2 class="item-title">Voice</h2></div>', unsafe_allow_html=True)
-        if st.button("vo"): st.session_state.page = 'voice'
+        if st.button("VO"): st.session_state.page = 'voice'
     
-    col3, col4 = st.columns(2)
-    with col3:
-        st.markdown('<div class="grid-item"><span class="tag-mono">MODULE_03</span><h2 class="item-title">Omega AI</h2></div>', unsafe_allow_html=True)
-        if st.button("om"): st.session_state.page = 'omega'
-    with col4:
-        st.markdown('<div class="grid-item"><span class="tag-mono">MODULE_04</span><h2 class="item-title">Dev Terminal</h2></div>', unsafe_allow_html=True)
-        if st.button("dev"): st.session_state.page = 'dev'
+    c3, c4 = st.columns(2)
+    with c3:
+        st.markdown('<div class="grid-item"><span class="tag-mono">COMPANION_03</span><h2 class="item-title">Omega AI</h2></div>', unsafe_allow_html=True)
+        if st.button("OM"): st.session_state.page = 'omega'
+    with c4:
+        st.markdown('<div class="grid-item"><span class="tag-mono">TERMINAL_04</span><h2 class="item-title">Dev Mode</h2></div>', unsafe_allow_html=True)
+        if st.button("DEV"): st.session_state.page = 'dev'
     st.markdown('</div>', unsafe_allow_html=True)
 
+# --- OMEGA AI PAGE ---
 elif st.session_state.page == 'omega':
     st.markdown('<div style="padding:50px;">', unsafe_allow_html=True)
-    if st.button("BACK"): st.session_state.page = 'home'
-    st.markdown("<h1 style='color:var(--volt); font-family:Inter; font-weight:900; font-size:60px;'>OMEGA_AI // ACTIVE</h1>", unsafe_allow_html=True)
-    st.write("---")
-    # Chat logic here
-    st.chat_input("Speak to Omega...")
+    if st.button("← RETURN"): st.session_state.page = 'home'
+    st.markdown("<h1 style='color:var(--volt); font-family:Inter; font-weight:900; font-size:80px;'>OMEGA_AI</h1>", unsafe_allow_html=True)
+    st.chat_message("assistant").write("I'm Omega. I speak your language—witty, fast, and grounded. What's the mission?")
+    st.chat_input("Message Omega...")
     st.markdown('</div>', unsafe_allow_html=True)
 
-# 4. TICKING SCRIPT (Forces the UI to refresh every second for the clock)
-st.empty()
-time.sleep(1)
-st.rerun()
+# --- VISION PAGE ---
+elif st.session_state.page == 'vision':
+    st.markdown('<div style="padding:50px;">', unsafe_allow_html=True)
+    if st.button("← RETURN"): st.session_state.page = 'home'
+    st.markdown("<h1 style='color:white; font-family:Inter; font-weight:900; font-size:80px;'>VISION_MODE</h1>", unsafe_allow_html=True)
+    st.camera_input("SCAN")
+    st.markdown('</div>', unsafe_allow_html=True)
