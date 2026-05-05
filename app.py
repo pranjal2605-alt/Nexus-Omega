@@ -1,7 +1,6 @@
 import streamlit as st
-import PIL.Image as Image
 
-# --- OS CONFIG ---
+# --- CORE CONFIG ---
 st.set_page_config(page_title="Nexus", layout="wide", initial_sidebar_state="collapsed")
 
 # --- CSS: THE "EMERGENT" PROTOCOL ---
@@ -10,74 +9,86 @@ st.markdown("""
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@700&display=swap');
     :root { --volt: #CDFF00; }
     
-    [data-testid="stAppViewContainer"] { background-color: #000 !important; }
-    header, footer { display: none !important; }
+    /* ABSOLUTE DARKNESS */
+    [data-testid="stAppViewContainer"], .stApp { background-color: #000 !important; }
+    header, footer, [data-testid="stHeader"] { display: none !important; }
 
-    /* TYPOGRAPHY MATCHING 1000244729_7.mp4 */
-    .headline { font-family: 'Inter'; font-size: 72px; font-weight: 900; line-height: 0.85; letter-spacing: -4px; color: #FFF; padding: 40px 40px 10px 40px; }
-    .headline span { color: var(--volt); }
+    /* TYPOGRAPHY */
+    .headline { 
+        font-family: 'Inter'; font-size: 82px; font-weight: 900; 
+        line-height: 0.85; letter-spacing: -5px; color: var(--volt); 
+        padding: 60px 40px 20px 40px; text-transform: uppercase;
+    }
 
-    /* THE BLACK-TEXT INPUT (PER image_0e415f.png) */
+    /* THE VOLT INPUT BOX (MATCHING YOUR SCREENSHOT) */
     .stTextInput > div > div > input {
         background-color: var(--volt) !important;
         color: #000 !important;
         font-family: 'JetBrains Mono' !important;
-        font-weight: 800 !important;
-        border-radius: 0px !important;
+        font-weight: 900 !important;
+        font-size: 24px !important;
+        border-radius: 4px !important;
         border: none !important;
-        padding: 20px !important;
-        font-size: 22px !important;
+        padding: 25px !important;
     }
 
-    /* TACTICAL OUTPUT AREA */
-    .output-box { 
-        margin: 20px 40px; padding: 30px; 
-        border: 1px solid #1A1A1A; background: #050505;
-        font-family: 'JetBrains Mono'; color: var(--volt);
+    /* TACTICAL BUTTONS (NO WHITE BACKGROUNDS) */
+    .stButton > button {
+        background-color: transparent !important;
+        color: #FFF !important;
+        border: 1px solid #333 !important;
+        font-family: 'JetBrains Mono' !important;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 14px !important;
+        padding: 10px 20px !important;
+        border-radius: 4px !important;
     }
-    .brain-icon { font-size: 40px; margin-bottom: 10px; }
+    .stButton > button:hover { border-color: var(--volt) !important; color: var(--volt) !important; }
+
+    /* BRAIN OUTPUT AREA */
+    .nexus-terminal {
+        margin: 20px 40px; padding: 40px;
+        background: #050505; border-left: 5px solid var(--volt);
+        font-family: 'JetBrains Mono'; color: #FFF;
+    }
+    .nexus-status { color: var(--volt); font-size: 12px; margin-bottom: 20px; letter-spacing: 3px; }
     </style>
     """, unsafe_allow_html=True)
 
-# --- UI CONTENT ---
-st.markdown('<h1 class="headline">ASK<br><span>NEXUS</span>_</h1>', unsafe_allow_html=True)
+# --- INTERFACE ---
+st.markdown('<h1 class="headline">ASK<br>NEXUS_</h1>', unsafe_allow_html=True)
 
 # --- THE INPUT BRAIN ---
 st.markdown('<div style="padding: 0 40px;">', unsafe_allow_html=True)
-query = st.text_input("COMMAND", placeholder="2+2 OR ASK ANYTHING...", label_visibility="collapsed")
+query = st.text_input("COMMAND", placeholder="TYPE 2+2 OR ANALYZE...", label_visibility="collapsed")
 st.markdown('</div>', unsafe_allow_html=True)
 
-# --- LOGIC HANDLING ---
+# --- LOGIC HANDLING (THE BRAIN) ---
 if query:
-    st.markdown('<div class="output-box">', unsafe_allow_html=True)
-    st.markdown('<div class="brain-icon">🧠</div>', unsafe_allow_html=True)
-    st.write("NEXUS_CORE // PROCESSING")
+    st.markdown('<div class="nexus-terminal">', unsafe_allow_html=True)
+    st.markdown('<div class="nexus-status">NEXUS_CORE // ACTIVE_PROCESS</div>', unsafe_allow_html=True)
     
     try:
-        # This handles the 2+2 math logic
+        # This handles the 2+2 logic and Python math
         result = eval(query)
-        st.markdown(f"## {result}")
-    except:
-        # Fallback for text questions
-        st.markdown(f"### Analyzing: {query}")
-        st.info("Direct logic applied to input.")
+        st.markdown(f"### RESULT: {result}")
+    except Exception:
+        # Fallback for text-based reasoning
+        st.markdown(f"### ANALYZING: {query}")
+        st.write("Deploying deep-logic solvers for your request...")
     
     st.markdown('</div>', unsafe_allow_html=True)
 
-# --- QUICK ACTION MODULES (FROM VIDEO) ---
-col1, col2, col3 = st.columns(3)
-with col1:
-    if st.button("📷 VISION"):
-        st.file_uploader("DROP IMAGE", type=['png', 'jpg'], label_visibility="collapsed")
-with col2:
-    if st.button("🎤 VOICE"):
-        st.write("Listening...")
-with col3:
-    if st.button("💻 CODE"):
-        st.write("Dev Mode Active")
-
-# --- START BUTTON ---
+# --- ACTION ROW ---
 st.markdown('<div style="padding: 20px 40px;">', unsafe_allow_html=True)
-if st.button("✨ START SOLVING"):
-    st.toast("Nexus Brain Engaged")
+col1, col2, col3, col4 = st.columns([1,1,1,2])
+with col1:
+    if st.button("📷 VISION"): st.toast("Camera Interface Ready")
+with col2:
+    if st.button("🎤 VOICE"): st.toast("Microphone Active")
+with col3:
+    if st.button("💻 CODE"): st.toast("Compiler Ready")
+with col4:
+    if st.button("✨ START SOLVING"): st.balloons()
 st.markdown('</div>', unsafe_allow_html=True)
